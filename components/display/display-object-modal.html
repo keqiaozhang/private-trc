@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <button type="button" ng-click="$dismiss()" class="close">&times</button>
+  <h3 class="modal-title">{{title}}</h3>
+</div>
+<div class="modal-body intel-display-object-modal-body">
+  <div class="modal-view-type">
+      <div class="btn-group pull-right cr-view-type" role="group">
+        <button type="button" class="btn btn-default" ng-class="{active:view==='graphic'}" ng-click="view='graphic'" title="Graphic view">
+          <i class="lead intelicon-frame-template"></i></button>
+        <button type="button" class="btn btn-default" ng-class="{active:view==='json'}" ng-click="view='json'" title="JSON view">
+          <i class="lead intelicon-code-outlined"></i></button>
+      </div>
+  </div>
+  <div class="row modal-details">
+    <div class="col-md-12">
+      <div ng-show="view==='graphic'">
+        <cr-display-object options="displayOptions" />
+      </div>
+      <div ng-show="view==='json'">
+        <pre>{{object|json}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

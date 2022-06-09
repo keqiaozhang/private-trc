@@ -1,0 +1,23 @@
+<div class="intcUserPicker">
+    <input type="text" class="form-control" data-ng-change="updateUser()" data-ng-model="intcUserPickerModel" data-ng-keydown="userKeydown($event)" data-ng-blur="closeUserInput()" placeholder="{{userPickerConfig.display.inputPlaceholder}}" data-ng-disabled="userPickerConfig.display.disabled">
+    <div class="iu-pop-container">
+        <ul class="list-group" data-ng-show="userPickerState.popUp">
+            <li class="list-group-item iu-item" data-ng-if="userPickerConfig.display.searchFor">Search for "{{intcUserPickerModel[userPickerConfig.modelField]}}"</li>
+            <li class="list-group-item iu-item" data-ng-show="userPickerState.noUsers">No results</li>
+            <li class="list-group-item iu-item" data-ng-class="{'iu-selected': $index == userPickerState.users.selected}" data-ng-repeat="user in userPickerState.users.data" data-ng-click="userClick(user)">
+
+                <img data-ng-if="userPickerConfig.userProperties.photo" height="40" width="40" class="iu-img" intc-photo-error ng-src="http://photos.intel.com/images/{{user[userPickerConfig.fields.wwid]}}.jpg" alt="{{user[userPickerConfig.fields.name]}} badge photo">
+
+                <div data-ng-class="{'iu-text': userPickerConfig.userProperties.photo}">
+                    <span class="iu-name" data-ng-class="{'iu-multiline':userPickerConfig.display.multiline}">
+                        {{user[userPickerConfig.fields.name]}} <span data-ng-show="!userPickerConfig.display.multiline && userPickerState.fieldList.length > 0"> - </span>
+                    </span>
+                    <span data-ng-repeat="field in userPickerState.fieldList">
+                        {{user[field]}} <span data-ng-show="!$last"> - </span>
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>

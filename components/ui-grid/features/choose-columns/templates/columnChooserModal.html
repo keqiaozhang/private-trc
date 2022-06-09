@@ -1,0 +1,26 @@
+<div class="modal-header">
+	<h3 class="modal-title">Select columns</h3>
+</div>
+<div class="modal-body intel-column-chooser-modal-body">
+	<div class="row">
+		<!-- Filter -->
+		<div class="form-group col-md-7">
+			<input type="text" placeholder="Column name" ng-model="columnFilter" class="form-control" auto-focus />
+		</div>
+		<!-- Buttons -->
+		<div class="btn-group col-md-5" role="group">
+			<button class="btn btn-default" ng-click="selectAll()">Select all</button>
+			<button class="btn btn-default" ng-click="unselectAll()">Unselect all</button>
+		</div>
+	</div>
+	<div class="ui-grid-choose-columns-list">
+		<ul class="list-group" ui-sortable="" ng-model="columns">
+			<li ng-repeat="col in columns|filter:columnFilter|orderBy:order" ng-click="toggleVisible(col)" ng-class="{active:col.visible}" class="list-group-item">
+				{{col.displayName}}</li>
+		</ul>
+	</div>
+</div>
+<div class="modal-footer">
+	 <button class="btn btn-primary" ng-click="ok()">OK</button>
+	 <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,50 @@
+<nav id="siteNav" ng-class="{ hideSearch: intcAppFrame.hideSearch }" class="hidden-print">
+	<div id="search">
+	    <button ng-click="openSearch($event)"><span class="intelicon-search"></span></button>
+	    <form class="navbar-form">
+	        <input type="text" placeholder="{{intcAppFrame.search.placeholder || 'Search'}}" ng-model="globalSearchQuery" ng-enter="handleSearch()" ng-click="searchFocus($event)" class="form-control" />
+	    </form>
+	</div>
+</nav>
+
+<div class="navbar navbar-intel navbar-fixed-top hidden-print" role="navigation">
+	<img class="navbar-logo" src="bower_components/it-mlaf-sass/images/intel-logo-white-100.png" alt="">
+
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cr-navbar-collaspe">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#/">{{intcAppFrame.header.title}}</a>
+	</div>
+	<div class="collapse  navbar-collapse" id="cr-navbar-collaspe">
+    <ul class="nav navbar-nav cr-navbar-nav-profil pull-right">
+      <li><a href="./#/user/teams"><subject-identity></subject-identity></a></li>
+    </ul>
+		<ul class="nav navbar-nav">
+      <!-- <menu-branches></menu-branches> -->
+			<li ng-repeat="item in intcAppFrame.nav.items" ng-class="{ active: item.active }" class="dropdown">
+				<a href="javascript:{}" ng-show="item.subItems && item.subItems.length" ng-click="toggleSubMenu($event)" class="dropdown-toggle">{{item.title}}
+					<span class="intelicon-down"></span>
+				</a>
+
+				<ul ng-show="item.subItems && item.subItems.length" class="dropdown-menu">
+					<li ng-repeat="subItem in item.subItems" ng-class="{ active: subItem.active }">
+						<a ng-href="{{subItem.href || 'javascript:{}'}}" target="{{subItem.target || ''}}" ng-click="handleClick(subItem)">{{subItem.title}}</a>
+					</li>
+				</ul>
+
+				<a ng-show="!item.subItems || !item.subItems.length" ng-href="{{item.href || 'javascript:{}'}}" ng-click="handleClick(item)">{{item.title}}</a>
+			</li>
+		</ul>
+	</div>
+	<div class="kink">
+		<div class="triangle"></div>
+		<div class="block"></div>
+	</div>
+</div>
+
+<div id="page" ng-class="{ showNav: showNav }">
+	<div ng-transclude></div>
+</div>

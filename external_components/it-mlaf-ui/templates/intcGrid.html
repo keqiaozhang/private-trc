@@ -1,0 +1,98 @@
+<div class="ig-grid">
+    <div data-ng-if="intcGrid.display.header">
+        <h3 data-ng-if="intcGrid.filter.query">
+            <span data-intc-grid-compile="intcGrid.filter.searchText"></span>
+            <span class="ig-search-term" data-ng-bind="intcGrid.filter.queryText"><span>
+        </h3>
+        <h2 data-ng-if="!intcGrid.filter.query" data-intc-grid-compile="intcGrid.filter.allText"></h2>
+    </div>
+    <div class="clearfix">
+        <div class="pull-left">
+            <h4>
+                <span data-ng-if="intcGrid.display.count">
+                    <span data-intc-grid-compile="intcGrid.filter.foundText"></span> {{intcGrid.data.count}}
+                </span>
+                <span data-ng-if="intcGrid.display.groupCount && intcGrid.group.column" class="ig-group-count">
+                    <span data-ng-if="intcGrid.display.count"> , </span>
+                    <span data-intc-grid-compile="intcGrid.group.groupText"></span> {{intcGrid.data.groupCount}}
+                </span>
+            </h4>
+        </div>
+        <div class="pull-right ig-group-drop" data-ng-if="intcGrid.group.enabled && intcGrid.data.clientOnly" data-ng-class="{'ig-mobile':intcGrid.display.mobile}">
+            <form class="form-inline ig-mobile-hide" role="form">
+                <div class="form-group">
+                    <label for="groupBy"><span class="intelicon-group"></span> {{intcGrid.group.label}} </label>
+                    <select class="form-control" id="groupBy" data-ng-model="intcGrid.group.columnSelected" data-ng-options="column.groupName for column in intcGrid.group.columns" data-ng-change="groupData(intcGrid.group.columnSelected)">
+                        <option value="">{{intcGrid.group.clear}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng-transclude></div>
+    <table class="table table-intel" data-ng-class="{'ig-mobile':intcGrid.display.mobile}">
+        <thead class="ig-mobile-hide">
+            <tr data-ng-if="intcGrid.display.columnHeaders">
+                <th data-ng-repeat="column in intcGrid.columns" class="{{column.cssClass}}" data-ng-class="{{column.headerCssExpression}}">
+                    <div data-ng-if="!column.headerTemplate" data-ng-class="{'ig-sort-header':column.sortOn}" data-ng-click="sortTable(column)">
+                        <span data-intc-grid-compile="column.displayName"></span>
+                        <span class="ig-group-indicator" data-ng-class="{'intelicon-group':column.groupName == intcGrid.group.column.groupName}"></span>
+                        <span data-ng-if="column.sortOn && column.groupName != intcGrid.group.column.groupName" class="ig-caret" data-ng-class="{
+                            'ig-caret-up' : !intcGrid.sort.reverse || column.field != intcGrid.sort.field,
+                            'ig-caret-down' : intcGrid.sort.reverse && column.field == intcGrid.sort.field,
+                            'ig-sort-active' : column.field == intcGrid.sort.field,
+                            'ig-sort-inactive' : column.field != intcGrid.sort.field
+                        }"></span>
+                    </div>
+                    <div data-ng-if="column.headerTemplate" data-intc-grid-compile="column.headerTemplate"></div>
+                </th>
+            </tr>
+            <tr data-ng-if="intcGrid.filter.enabled">
+                <td data-ng-repeat="column in intcGrid.columns" data-ng-class="{{column.filterCssExpression}}">
+                    <div data-ng-if="column.filterOn && column.filterTemplate" data-intc-grid-compile="column.filterTemplate"></div>
+                    <input data-ng-if="column.filterOn && !column.filterTemplate" type="text" placeholder="{{column.filterPlaceholder}}" class="ig-filter-input" data-ng-model="intcGrid.columns[$index].filterValue" data-ng-change="changeFilter(column)"/>
+                </td>
+            </tr>
+        </thead>
+        <tbody data-ng-if="intcGrid.rowTemplates.top" class="ig-body" data-intc-grid-compile="intcGrid.rowTemplates.top"></tbody>
+        <tbody data-ng-if="intcGrid.data.loaded && !intcGrid.group.column" class="ig-body" data-ng-include="intcGrid.rowTemplateCacheName"></tbody>
+        <tbody class="ig-group-container" data-ng-repeat="group in intcGrid.data.grouped" data-ng-include="intcGrid.rowTemplateGroupCacheName"></tbody>
+        <tbody data-ng-if="intcGrid.display.waiting && !intcGrid.data.loaded">
+             <tr>
+                <td colspan="{{intcGrid.columns.length}}" class="ig-loading" data-intc-grid-compile="intcGrid.display.waitingMessage"></td>
+             </tr>
+        </tbody>
+        <tbody data-ng-if="intcGrid.rowTemplates.bottom" class="ig-body" data-intc-grid-compile="intcGrid.rowTemplates.bottom"></tbody>
+        <tfoot data-ng-if="intcgrid.display.showFooter || intcGrid.paging.enabled">
+            <tr>
+                <td colspan="{{intcGrid.columns.length}}">
+                    <div class="ig-pull-right ig-paging" data-ng-if="intcGrid.paging.enabled && intcGrid.data.displayed.length > 0">
+                        <div class="ig-page-block ig-mobile-hide form-inline" data-ng-if="intcGrid.display.pageSizes">
+                            <label for="selectPageSize">Page size:</label>
+                            <select class="form-control" id="selectPageSize" data-ng-model="intcGrid.paging.size" data-ng-options="size as size.display for size in intcGrid.paging.sizes"></select>
+                        </div>
+
+                        <div class="ig-page-block ig-margin-left">
+                            <span class="intelicon-rewind-reverse" data-ng-class="{'ig-paging-active':intcGrid.paging.current > 1, 'ig-paging-inactive':intcGrid.paging.current == 1}" data-ng-click="setPage(1)"></span>
+
+                            <span class="intelicon-left-previous" data-ng-class="{'ig-paging-active':intcGrid.paging.current > 1, 'ig-paging-inactive':intcGrid.paging.current == 1}" data-ng-click="incrementPage(-1)"></span>
+
+                            <span class="form-inline ig-page-number">
+                                <label for="selectPageNumber">Page:</label>
+                                <input type="number" id="selectPageNumber" class="form-control" data-ng-model="intcGrid.paging.current" data-ng-change="setPage()" min="1" max="{{intcGrid.paging.max}}" /> of {{intcGrid.paging.max}}
+                            </span>
+
+                            <span class="intelicon-right-next" data-ng-class="{'ig-paging-active':intcGrid.paging.current < intcGrid.paging.max, 'ig-paging-inactive':intcGrid.paging.current == intcGrid.paging.max}" data-ng-click="incrementPage(1)"></span>
+
+                            <span class="intelicon-fast-forward" data-ng-class="{'ig-paging-active':intcGrid.paging.current < intcGrid.paging.max, 'ig-paging-inactive':intcGrid.paging.current == intcGrid.paging.max}" data-ng-click="setPage(intcGrid.paging.max)"></span>
+                        </div>
+                    </div>
+                    <div class="ig-pull-left ig-refresh" data-ng-if="intcGrid.data.enableRefresh">
+                        <label>Last Refresh:</label> {{intcGrid.data.timestamp}}
+                        <input type="button" class="btn btn-primary ig-margin-left" value="Refresh" data-ng-click="refreshData()" />
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

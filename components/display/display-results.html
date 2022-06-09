@@ -1,0 +1,40 @@
+<!-- Generic template to use to display complex objects -->
+<script type="text/ng-template"  id="objectTree">
+  <h4 ng-if="property.depth > 1 && property.depth < 5">{{property.displayName}}</h4>
+  <h5 ng-if="property.depth >= 5">{{property.displayName}}</h5>
+
+  <!-- Object -->
+  <div ng-if="property.type == type.OBJECT">
+    <dl class="cr-props-simple dl-horizontal" ng-if="property.simpleProperties.length > 0">
+      <dt ng-repeat-start="simpleProp in property.simpleProperties">{{simpleProp.displayName}}</dt>
+      <dd ng-repeat-end><cr-display-property property="simpleProp" /></dd>
+    </dl>
+    <ul class="cr-props-complex" ng-if="property.complexProperties.length > 0">
+        <li ng-repeat="property in property.complexProperties" ng-include="'objectTree'"></li>
+    </ul>
+  </div>
+  <!-- List -->
+  <div ng-if="property.type == type.OBJECT_ARRAY || property.type == type.COLUMN_ARRAY">
+    <table class="table" ng-if="property.complexProperties.length > 0">
+      <tr><th ng-if="property.headersName !== undefined" ng-repeat="header in property.headersName">{{header}}</th></tr>
+      <tr><th ng-if="property.headersName === undefined" ng-repeat="header in property.headers">{{header}}</th></tr>
+      <tr ng-repeat="object in property.complexProperties">
+        <!--<td ng-repeat="objectProp in object.simpleProperties">{{objectProp.value}}</td>-->
+        <td ng-repeat="header in property.headers">{{object.value[header]}}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- List of primitive -->
+  <div ng-if="property.type == type.PRIMITIVE_ARRAY">
+    <ul class="list-inline">
+      <li ng-repeat="primitiveProperty in property.simpleProperties" style="white-space: pre-wrap;">{{primitiveProperty.value}}</li>
+    </ul>
+  </div>
+</script>
+
+<!-- display the first and second level of properties in a more readable way then display other level in n dim list -->
+<div class="row cr-display-object" ng-repeat="property in metadata.complexProperties">
+  <div class="cr-props-tab" ng-include="'objectTree'" ng-if="!property.def"></div>
+  <!-- Else we use that definition and its template associated to construct the display -->
+  <cr-display-property property="property" ng-if="property.def"/>
+</div>

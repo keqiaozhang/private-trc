@@ -1,0 +1,16 @@
+<nav class="cr-grid-pagination">
+  <!-- Right controller -->
+  <form class="form-inline pull-right">
+    <span ng-show="gridApi.grid.options.totalItems > gridApi.grid.options.paginationPageSize">
+    Page size <select  class="form-control" ng-model="gridApi.grid.options.paginationPageSize" ng-options="o as o for o in gridApi.grid.options.paginationPageSizes"></select>
+    Go to <input type="number" class="form-control" ng-model="gridApi.grid.options.paginationCurrentPage">
+    </span>
+    Total: {{gridApi.grid.options.totalItems | number}}
+  </form>
+
+  <pagination ng-show="gridApi.grid.options.totalItems > gridApi.grid.options.paginationPageSize" max-size="size"
+              ng-model="gridApi.grid.options.paginationCurrentPage"
+              items-per-page="gridApi.grid.options.paginationPageSize"
+              total-items="gridApi.grid.options.totalItems"
+              boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+</nav>

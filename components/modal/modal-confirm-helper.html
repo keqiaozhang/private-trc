@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body">
+  <p ng-if="modal.text" ng-bind="modal.text"></p>
+  <div ng-if="modal.html" ng-bind-html="modal.html"></div>
+  <comment-editor ng-if="modal.haveComment" model="modal.data.comment" placeholder="Leave a comment..."></comment-editor>  
+</div>
+<div class="modal-footer">
+  <button ng-repeat="button in modal.buttons" class="btn" ng-class="button.classes" ng-click="button.click($event,modal.data)" ng-bind="button.text"></button>
+</div>
+</form>

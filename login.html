@@ -1,0 +1,16 @@
+<!doctype html>
+
+
+<head>
+  <script type="text/javascript">
+    window.parent.postMessage({
+      type: 'auth',
+      urlParams: window.location.hash.substring(1)
+    }, '*');
+  </script>
+</head>
+
+<body>
+
+
+

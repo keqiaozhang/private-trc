@@ -1,0 +1,130 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" ng-app="CampaignReportingApp">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Prevent caching -->
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="cache-control" content="no-store">
+  <meta http-equiv="pragma" content="no-cache">
+
+  <title state-title="TCR"></title>
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link rel="stylesheet" href="app/7493eab4.vendor.css">
+  <link rel="stylesheet" href="app/5397d481.main.css">
+</head>
+
+<body>
+
+<!-- Load external env variables -->
+<script src="env.js?version=1.32.87"></script>
+
+<!--[if lt IE 9]>
+<div class="browseHappy" id="pageContent">
+  <section>
+    <h2>Sorry, it just isn't working out between us...</h2>
+    <div class="pure-g-r">
+      <div class="pure-u-3-4">
+        <p>It's not you. It's IE.</p>
+        <p>We met, we browsed, we had some laughs and it was epic.</p>
+        <p>Then the sun came up and reality set in. I just can’t give you the fast and modern experience that you want. No. That you deserve.</p>
+        <p>I want you to have the full richness that the modern web can give you, without ever needing plugins like Silverlight and Flash.</p>
+        <p>We will always have Windows XP.</p>
+        <br />
+        <p>Always,
+          <br>- IE8</p>
+        <p>P.S. I know this hurts, but you will thank me later.</p>
+      </div>
+      <div class="pure-u-1-4">
+        <img src="assets/images/5be44901.ie8-sad.png" alt="">
+      </div>
+    </div>
+    <div class="pure-g-r">
+      <div class="pure-u-1">
+        <h3>Switch to a modern browser!</h3>
+        <ul>
+          <li><a href="http://it.intel.com/redirects/download/ie10_redirect.htm">IE 10+</a>
+          </li>
+          <li><a href="http://it.intel.com/redirects/download/chrome_redirect.htm">Google Chrome</a>
+          </li>
+          <li><a href="http://it.intel.com/redirects/download/firefox_redirect.htm">Mozilia Firefox</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+<![endif]-->
+<div class="stickyWrapper">
+  <intc-app-frame ng-controller="AppFrameCtrl">
+    <div class="hidden-print"><state-breadcrumb></state-breadcrumb></div>
+    <div ng-controller="AppFrameCtrl">
+      <div class="visible-print"><!-- header for printing -->
+        <img class="navbar-logo" height="20" src="bower_components/it-mlaf-sass/images/intel-logo-blue-100.png" alt=""> Test campaign reporting
+      </div>
+      <div ui-view=""></div>
+    </div>
+  </intc-app-frame>
+  <div class="stickyPush"></div>
+</div>
+<footer class="stickyFooter hidden-print" id="pageFooter">
+  <small class="text-muted">
+      <a href="https://employeecontent.intel.com/content/corp/Global_Employee_and_Global_Contingent_Worker_Privacy.html" target="_blank">Employee/Contingent Worker Privacy</a> -
+      <a href="https://wiki.ith.intel.com/pages/viewpage.action?pageId=460130265" target="_blank">Report a problem</a> -
+      Web version {{app.version}} - REST API version {{api.version}} -
+      last update {{app.lastModified|date}} -
+      live stream {{liveStream.status}} <span ng-if="liveStream.status === 'connected'">(ping {{liveStream.ping}}ms)</span>
+  </small>
+</footer>
+
+  <!--[if lt IE 9]>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+  <script src="app/834c6cc7.vendor.js"></script>
+
+  <script src="app/f8b9625d.scripts.js"></script>
+
+  <!-- Intel System Analytics -->
+  <script>
+
+    $(document).ready(function() {
+      (function(d, URL, IapID, Env, s_) {
+        s_ = d.createElement('script');
+        s_.async = 1;
+        s_.src = URL + '/' + IapID + (Env ? '?environment=' + Env : '');
+        d.body.appendChild(s_);
+      })(document, 'https://appusage.intel.com/Service/api/LogUser', 12254);
+    });
+
+  </script>
+  <!-- Piwik -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    // tracker methods like "setCustomDimension" should be called before "trackPageView"
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//sof-tcr.sh.intel.com/piwik/";
+      _paq.push(['setTrackerUrl', u+'piwik.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  <!-- End Piwik Code -->
+
+  <iframe id="hdIframe" src="about:blank" hidden></iframe>
+
+
+

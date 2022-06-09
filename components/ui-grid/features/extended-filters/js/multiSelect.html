@@ -1,0 +1,11 @@
+<form class="form-inline">
+  <span dropdown dropdown-append-to-body auto-close="outsideClick">
+  <span><a href dropdown-toggle>
+   &nbsp;&nbsp;{{selectedItems?selectedItems.join(","):defaultValue}}
+  </a></span>
+  <ul class="dropdown-menu">
+    <li role="menuitem"><a href='javascript:void(0)' ng-click="clearAll()"><input type="checkbox" ng-click="clearAll();$event.stopPropagation()" ng-checked="!selectedItems||selectedItems.length==items.length"/>&nbsp;{{defaultValue}}</a></li>
+    <li role="menuitem" ng-repeat="item in items"><a href='javascript:void(0)' ng-click="selectItem(item)" ng-class="styleClass(item.key)"><input ng-click="selectItem(item);$event.stopPropagation()" type="checkbox" ng-checked="selected[item.key]"/>&nbsp;{{item.label}}</a></li>
+  </ul>
+  </span>
+</form>
